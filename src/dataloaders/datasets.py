@@ -26,7 +26,8 @@ from src.utils import permutations, is_list
 import pickle
 
 # Default data path is environment variable or hippo/data
-if (default_data_path := os.getenv("DATA_PATH")) is None:
+default_data_path = os.getenv("DATA_PATH")
+if default_data_path is None:
     default_data_path = Path(__file__).parent.parent.parent.absolute()
     default_data_path = default_data_path / "data"
 else:

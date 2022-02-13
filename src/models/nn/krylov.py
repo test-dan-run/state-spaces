@@ -387,7 +387,8 @@ class KrylovNPLR(PreprocessModule):
             sA = sV * w.conj().unsqueeze(-2) - (2+0j)*(sV@qV.conj().transpose(-1,-2)).real @ pV
             sV = sV / dt.unsqueeze(-1).unsqueeze(-1) + sA/2
 
-            if (l := len(BV.shape)) < len(sV.shape):
+            l = len(BV.shape)
+            if l < len(sV.shape):
                 BV = BV.repeat(sV.shape[:-l] + (1,)*l)
             BV = torch.cat([sV, BV], dim=-2) # (..., 2+s, N)
 
