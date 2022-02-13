@@ -1,6 +1,6 @@
 # @package _global_
 defaults:
-  - /pipeline: sc
+  - /pipeline: voxlingua
   - /model: s4
 
 model:

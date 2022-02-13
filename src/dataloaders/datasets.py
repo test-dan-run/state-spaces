@@ -664,6 +664,67 @@ class SpeechCommands(SequenceDataset):
             all_classes=self.all_classes,
         )
 
+class Voxlingua107(SequenceDataset):
+    _name_ = "voxlingua"
+
+    @property
+    def init_defaults(self):
+        return {
+            "mfcc": False,
+            "dropped_rate": 0.0,
+            "length": 16000,
+            "num_classes": 9,
+            "data_path": None,
+        }
+
+    def init(self):
+        if self.mfcc:
+            self.d_input = 20
+            self.L = 161
+        else:
+            self.d_input = 1
+            self.L = self.length
+
+        if self.dropped_rate > 0.0:
+            self.d_input += 1
+
+        self.d_output = self.num_classes
+        self.l_output = 0
+
+    def setup(self):
+        from src.dataloaders.sc import _VoxLingua107
+
+        # TODO refactor with data_dir argument
+        self.dataset_train = _VoxLingua107(
+            partition="train",
+            length=16000,  # self.L,
+            mfcc=self.mfcc,
+            sr=1,
+            dropped_rate=self.dropped_rate,
+            path=self.data_path if self.data_path else default_data_path,
+            num_classes=self.num_classes,
+        )
+
+        self.dataset_val = _VoxLingua107(
+            partition="val",
+            length=16000,  # self.L,
+            mfcc=self.mfcc,
+            sr=1,
+            dropped_rate=self.dropped_rate,
+            path=self.data_path if self.data_path else default_data_path,
+            num_classes=self.num_classes,
+        )
+
+        self.dataset_test = _VoxLingua107(
+            partition="test",
+            length=16000,  # self.L,
+            mfcc=self.mfcc,
+            sr=1,
+            dropped_rate=self.dropped_rate,
+            path=self.data_path if self.data_path else default_data_path,
+            num_classes=self.num_classes,
+        )
+
 
 """ LRA datasets """
 

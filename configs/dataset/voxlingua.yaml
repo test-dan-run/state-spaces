@@ -1,0 +1,6 @@
+_name_: voxlingua
+mfcc: False
+dropped_rate: 0.
+length: 80000
+all_classes: false # Use original dataset or 10-way version
+__l_max: ${.length}
