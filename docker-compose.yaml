@@ -5,7 +5,7 @@ services:
   local:
     stdin_open: true
     tty: true
-    image: dleongsh/s4:v1.10.0
+    image: dleongsh/s4:nvcr-21.06
     ports:
       - 6006:6006
       - 8888:8888

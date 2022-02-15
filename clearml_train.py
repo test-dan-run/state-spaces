@@ -1,11 +1,11 @@
 from clearml import Task
 
 task = Task.init(
-    project_name='speech_classification', 
+    project_name='state_spaces/speech_classification', 
     task_name='speech_commands_35classes', 
     output_uri='s3://experiment-logging/storage', 
     task_type='training')
-task.set_base_docker('dleongsh/s4:v1.10.0')
+task.set_base_docker('dleongsh/s4:v1.10.0 --env HOME=/root')
 task.execute_remotely(queue_name='compute', clone=False, exit_process=True)
 
 

@@ -544,48 +544,6 @@ class _VoxLingua107(torch.utils.data.TensorDataset):
         self.num_classes = num_classes
         self.discrete_input = discrete_input
 
-        self.root = pathlib.Path(path)  # pathlib.Path("./data")
-        base_loc = self.root / "SpeechCommands" / "processed_data"
-
-        if mfcc:
-            data_loc = base_loc / "mfcc"
-        else:
-            data_loc = base_loc / "raw"
-
-            if self.dropped_rate != 0:
-                data_loc = pathlib.Path(
-                    str(data_loc) + "_dropped{}".format(self.dropped_rate)
-                )
-
-        if self.all_classes:
-            data_loc = pathlib.Path(str(data_loc) + "_all_classes")
-
-        if self.discrete_input:
-            data_loc = pathlib.Path(str(data_loc) + "_discrete")
-
-        if os.path.exists(data_loc):
-            pass
-        else:
-            self.download()
-            if not self.all_classes:
-                train_X, val_X, test_X, train_y, val_y, test_y = self._process_data(mfcc)
-            else:
-                train_X, val_X, test_X, train_y, val_y, test_y = self._process_all(mfcc)
-
-            if not os.path.exists(base_loc):
-                os.mkdir(base_loc)
-            if not os.path.exists(data_loc):
-                os.mkdir(data_loc)
-            save_data(
-                data_loc,
-                train_X=train_X,
-                val_X=val_X,
-                test_X=test_X,
-                train_y=train_y,
-                val_y=val_y,
-                test_y=test_y,
-            )
-
         X, y = self.load_data(data_loc, partition) # (batch, length, 1)
         if self.gen: y = y.transpose(1, 2)
 
